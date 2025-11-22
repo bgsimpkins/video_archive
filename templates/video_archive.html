@@ -1,0 +1,32 @@
+{% extends "menuBar.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Video Archive</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--script src="{{ url_for('static', filename='scrapeScript.js') }}"></script-->
+</head>
+
+<body>
+    <br>
+        <div id="alert_div">
+        {% if alert_text %}
+            <div id="form_alert" style="...">
+                {{alert_text | safe}}
+            </div>
+        {% endif%}
+        </div>
+
+    <div id="debugText"></div>
+    <br>
+
+
+
+    <h3>Videos:</h3>
+
+</body>
+
+{% endblock %}
