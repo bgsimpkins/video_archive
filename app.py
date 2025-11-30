@@ -23,14 +23,27 @@ def video_archive():
     db_mapper = DBMapper(config_vals)
     videos = db_mapper.get_all_videos()
 
-    for vid in videos:
-        print(f"name={vid.videoName}")
+    #################### Test
+
+    # for vid in videos:
+    #     #print(f" name={vid.videoName}")
+    #     pass
+
+    # Add
+    # new_vid = db_mapper.Video(id=666, videoName='test insert')
+    # db_mapper.add_new_video(new_vid)
+
+    # Update
+    #db_mapper.get_one_video(666)
+
+    #################### End Test
 
     if request.method == 'POST':
         print('POST!')
 
     return render_template(
-        'video_archive.html'
+        'video_archive.html',
+        videos=videos
     )
 
 

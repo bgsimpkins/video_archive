@@ -27,6 +27,32 @@
 
     <h3>Videos:</h3>
 
+    <form id="videos_form" method="post">
+        <input type="submit" id="add_video" name="add_video" value="Add New Video">
+        <br><br>>
+
+        <table style="height: 550px">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Video Name</th>
+                    <th>Date</th>
+                    <th>Tags</th>
+                </tr>
+            {% for vid in videos %}
+                <tr class="video_row">
+                    <td id="id">{{ vid.id }}</td>
+                    <td id="videoName">{{ vid.videoName }}</td>
+                    <td id="theDate">{{ vid.theDate }}</td>
+                    <td id="type">{{ vid.type }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </form>
+
+
 </body>
 
 {% endblock %}
