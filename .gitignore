@@ -211,6 +211,5 @@ __marimo__/
 .idea/
 
 # media folders
-./videos
-./video_screenshots
-./thumbnails
+thumbnails/
+/videos/
