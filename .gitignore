@@ -209,3 +209,8 @@ __marimo__/
 .backup/
 
 .idea/
+
+# media folders
+./videos
+./video_screenshots
+./thumbnails
