@@ -70,3 +70,40 @@ class DBMapper:
         session = Session(self.engine)
         session.commit()
 
+    def query_for_filter_and_sort(
+            self,
+            videoname_contains=None,
+            tag_contains=None,
+            description_contains=None,
+            date_between=None,
+            sort_var1=None,
+            sort_var2=None
+    ):
+        # videoName (contains), type/tag (contains), description (contains), date (between)
+
+        conn = self.engine.connect()
+
+        # Build select statement and append filters if used
+        stmt = sa.select(self.Video)
+
+        if videoname_contains is not None:
+            videoName_contains = videoname_contains.replace(' ', "%")
+            stmt = stmt.where(self.Video.videoName.like(f"%{videoname_contains}%"))
+        if tag_contains is not None:
+            tag_contains = tag_contains.replace(' ', "%")
+            stmt = stmt.where(self.Video.type.like(f"%{tag_contains}%"))
+        if description_contains is not None:
+            description_contains = description_contains.replace(' ', "%")
+            stmt = stmt.where(self.Video.description.like(f"%{description_contains}%"))
+        if date_between is not None:
+            stmt = stmt.filter(self.Video.theDate.between(date_between[0], date_between[1]))
+
+        if sort_var1 is not None:
+            stmt = stmt.order_by(sa.text(sort_var1))
+
+        if sort_var2 is not None:
+            stmt = stmt.order_by(sa.text(sort_var2))
+
+        # return conn.execute(stmt).first()
+        return conn.execute(stmt)
+
