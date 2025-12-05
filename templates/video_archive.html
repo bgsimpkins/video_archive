@@ -7,7 +7,7 @@
     <title>Video Archive</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!--script src="{{ url_for('static', filename='scrapeScript.js') }}"></script-->
+    <script src="{{ url_for('static', filename='video_archive.js') }}"></script>
 </head>
 
 <body>
@@ -29,7 +29,24 @@
 
     <form id="videos_form" method="post">
         <input type="submit" id="add_video" name="add_video" value="Add New Video">
-        <br><br>>
+        <br><br>
+
+        Filters:
+        <div id="filter_div">
+            <select name="filter_select" id="filter_select">
+                <option value="videoName" selected>Video Name</option>
+                <option value="description">Video Description</option>
+                <option value="location">Location</option>
+                <option value="tags">Tags</option>
+                <option value="theDate">Recorded Date</option>
+            </select>
+
+            <div id="filter_value_panel"></div>
+            <!--input type="button" id="add_filter" name="add_filter" value="Add Filter"-->
+        </div>
+
+
+
 
         <table style="height: 550px">
             <tbody>
