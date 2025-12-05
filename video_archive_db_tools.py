@@ -74,6 +74,7 @@ class DBMapper:
             self,
             videoname_contains=None,
             tag_contains=None,
+            location_contains=None,
             description_contains=None,
             date_between=None,
             sort_var1=None,
@@ -92,6 +93,9 @@ class DBMapper:
         if tag_contains is not None:
             tag_contains = tag_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.type.like(f"%{tag_contains}%"))
+        if location_contains is not None:
+            location_contains = location_contains.replace(' ', "%")
+            stmt = stmt.where(self.Video.location.like(f"%{location_contains}%"))
         if description_contains is not None:
             description_contains = description_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.description.like(f"%{description_contains}%"))
