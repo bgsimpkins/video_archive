@@ -20,26 +20,22 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def video_archive():
 
-    db_mapper = DBMapper(config_vals)
-    videos = db_mapper.get_all_videos()
-
-    #################### Test
-
-    # for vid in videos:
-    #     #print(f" name={vid.videoName}")
-    #     pass
-
-    # Add
-    # new_vid = db_mapper.Video(id=666, videoName='test insert')
-    # db_mapper.add_new_video(new_vid)
-
-    # Update
-    #db_mapper.get_one_video(666)
-
-    #################### End Test
+    videoname_contains = None
 
     if request.method == 'POST':
-        print('POST!')
+        # post = request.form
+        # print('POST!')
+
+        for x in request.form.items():
+            if 'videoName_input' in request.form:
+                videoname_contains = request.form['videoName_input']
+
+    db_mapper = DBMapper(config_vals)
+    # videos = db_mapper.get_all_videos()
+    videos = db_mapper.get_videos_filter_and_sort(
+        videoname_contains=videoname_contains
+    )
+
 
     return render_template(
         'video_archive.html',

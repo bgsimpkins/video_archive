@@ -14,9 +14,12 @@ $(document).ready(function()
         $("#filter_value_panel").empty();
         if ($(this).val() == "videoName")
         {
-            $("#filter_value_panel").append("Enter name:&nbsp <input type='text' id='videoName_input'>");
+            $("#filter_value_panel").append("Enter name keywords:&nbsp <input type='text' id='videoName_input' name='videoName_input'>");
+        }
+        else if ($(this).val() == "description"){
+            $("#filter_value_panel").append("Enter description keywords:&nbsp <input type='text' id='description_input'>");
         };
-        $("#filter_value_panel").append("<input type='button' id='add_filter' name='add_filter' value='Add Filter'>");
+        $("#filter_value_panel").append("<input type='submit' id='add_filter' name='add_filter' value='Add Filter'>");
 
     });
 

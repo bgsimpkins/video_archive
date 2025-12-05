@@ -70,7 +70,7 @@ class DBMapper:
         session = Session(self.engine)
         session.commit()
 
-    def query_for_filter_and_sort(
+    def get_videos_filter_and_sort(
             self,
             videoname_contains=None,
             tag_contains=None,
@@ -108,6 +108,11 @@ class DBMapper:
         if sort_var2 is not None:
             stmt = stmt.order_by(sa.text(sort_var2))
 
+        video_list = []
+
         # return conn.execute(stmt).first()
-        return conn.execute(stmt)
+        for row in conn.execute(stmt):
+            video_list.append(row)
+
+        return video_list
 

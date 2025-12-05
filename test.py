@@ -68,7 +68,7 @@ db_mapper = DBMapper(config_vals)
 #     sort_var1 = "theDate"
 #                   )
 
-res = db_mapper.query_for_filter_and_sort(
+res = db_mapper.get_videos_filter_and_sort(
     videoname_contains = "Thomas",
     tag_contains = None,
     description_contains = "Benny Play",
