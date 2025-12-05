@@ -22,13 +22,24 @@ def video_archive():
 
     videoname_contains = None
 
+    # Filter options combo box. Remove items that are in POST
+    filter_options = {
+        "videoName": "Video Name",
+        "description": "Video Description",
+        "location": "Location",
+        "tags": "Tags",
+        "theDate": "Recorded Date"
+    }
+
     if request.method == 'POST':
         # post = request.form
         # print('POST!')
 
+        # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
-            if 'videoName_input' in request.form:
+            if x[0] == 'videoName_input':
                 videoname_contains = request.form['videoName_input']
+                filter_options.pop('videoName')
 
     db_mapper = DBMapper(config_vals)
     # videos = db_mapper.get_all_videos()
@@ -36,9 +47,9 @@ def video_archive():
         videoname_contains=videoname_contains
     )
 
-
     return render_template(
         'video_archive.html',
+        filter_options=filter_options,
         videos=videos
     )
 

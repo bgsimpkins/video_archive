@@ -34,11 +34,9 @@
         Filters:
         <div id="filter_div">
             <select name="filter_select" id="filter_select">
-                <option value="videoName" selected>Video Name</option>
-                <option value="description">Video Description</option>
-                <option value="location">Location</option>
-                <option value="tags">Tags</option>
-                <option value="theDate">Recorded Date</option>
+            {% for k,v in filter_options.items() %}
+                <option value="{{ k }}" selected>{{ v }}</option>
+            {% endfor %}
             </select>
 
             <div id="filter_value_panel"></div>
