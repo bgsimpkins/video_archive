@@ -70,6 +70,8 @@ class DBMapper:
         session = Session(self.engine)
         session.commit()
 
+    # TODO: Could be made more dynamic by passing in lists/dictionaries for contains, between, etc
+    # and looping through them and processing dynamically
     def get_videos_filter_and_sort(
             self,
             videoname_contains=None,
@@ -88,7 +90,7 @@ class DBMapper:
         stmt = sa.select(self.Video)
 
         if videoname_contains is not None:
-            videoName_contains = videoname_contains.replace(' ', "%")
+            videoname_contains = videoname_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.videoName.like(f"%{videoname_contains}%"))
         if tag_contains is not None:
             tag_contains = tag_contains.replace(' ', "%")

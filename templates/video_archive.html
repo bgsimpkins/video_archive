@@ -12,6 +12,7 @@
 
 <body>
     <br>
+        <!--GENERIC ALERT PANEL-->
         <div id="alert_div">
         {% if alert_text %}
             <div id="form_alert" style="...">
@@ -23,19 +24,29 @@
     <div id="debugText"></div>
     <br>
 
-
-
     <h3>Videos:</h3>
 
     <form id="videos_form" method="post">
         <input type="submit" id="add_video" name="add_video" value="Add New Video">
         <br><br>
 
-        Filters:
+        <h4>Filters:</h4>
+        <input type="submit" id="clear_filters" name="clear_filters" value="Clear Filters">
+        <br><br>
+
         <div id="filter_div">
+
+            {% for filter in selected_filter_list %}
+                <span class = "selected_filter">
+                    {{ filter[1] }} &nbsp <input type="image" class="x_filter_button" name="{{ filter[0] }}_remove" src="{{ url_for('static', filename='x.png') }}"/>
+                </span>
+            {% endfor %}
+        </div>
+        <div id="new_filter_div">
+            Select New Filter:
             <select name="filter_select" id="filter_select">
             {% for k,v in filter_options.items() %}
-                <option value="{{ k }}" selected>{{ v }}</option>
+                <option value="{{ k }}">{{ v }}</option>
             {% endfor %}
             </select>
 
@@ -43,6 +54,7 @@
             <!--input type="button" id="add_filter" name="add_filter" value="Add Filter"-->
         </div>
 
+        <br><br>
 
 
 
