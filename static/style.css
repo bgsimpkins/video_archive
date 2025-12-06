@@ -42,6 +42,11 @@ h4{
     padding: 4px;
 }
 
+.selected_filter_value{
+    background-color: #610505;
+    color: #F7F0F0;
+}
+
 .x_filter_button{
     width: 15px;
     height: 15px;

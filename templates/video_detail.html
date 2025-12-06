@@ -1,0 +1,32 @@
+{% extends "menuBar.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Video Archive</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--script src="{{ url_for('static', filename='video_archive.js') }}"></script-->
+</head>
+
+<body>
+    <br>
+        <!--GENERIC ALERT PANEL-->
+        <div id="alert_div">
+        {% if alert_text %}
+            <div id="form_alert" style="...">
+                {{alert_text | safe}}
+            </div>
+        {% endif%}
+        </div>
+
+    <video width="320" height="240" controls>
+        <source src="{{ url_for('static', filename='')}}{{ video_file }}" type="video/mp4">
+    </video>
+
+
+
+</body>
+
+{% endblock %}

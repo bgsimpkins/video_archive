@@ -1,6 +1,5 @@
 import os
-import time
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
 
@@ -43,8 +42,6 @@ def video_archive():
         # post = request.form
         # print('POST!')
 
-
-
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
 
@@ -56,11 +53,11 @@ def video_archive():
                 )
 
             # Handle all filters
-            elif x[0] == 'videoName_input':
+            if x[0] == 'videoName_input':
                 videoname_contains = request.form['videoName_input']
                 selected_filter_list.append(["videoName", "Video Name =", videoname_contains])
                 filter_options.pop('videoName')
-            elif x[0] == 'description_input':
+            if x[0] == 'description_input':
                 description_contains = request.form['description_input']
                 selected_filter_list.append(["description", "Video Description =", description_contains])
                 filter_options.pop('description')
@@ -71,10 +68,7 @@ def video_archive():
             #     # input of type image returns two vals. One for x and one for x of click.
             #     to_remove = x[0].replace("_remove.x","")
 
-                # TODO: Repopulate dropdown with one that was removed
-
-
-    # TODO: It would better if this function took the form input values in the request.form[] collection instead of individually
+    # TODO: It would better if this function took the form input values in a collection instead of individually so can handle dynamically
     videos = db_mapper.get_videos_filter_and_sort(
         videoname_contains=videoname_contains,
         description_contains=description_contains
@@ -85,6 +79,20 @@ def video_archive():
         filter_options=filter_options,
         selected_filter_list=selected_filter_list,
         videos=videos
+    )
+
+
+@app.route('/video_detail', methods=['GET', 'POST'])
+def video_detail():
+
+    id = request.args.get('id')
+    db_mapper = DBMapper(config_vals)
+    vid = db_mapper.get_one_video(id)
+
+
+    return render_template(
+        'video_detail.html',
+        video_file=vid.link
     )
 
 
