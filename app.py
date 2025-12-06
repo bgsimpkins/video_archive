@@ -24,6 +24,7 @@ def video_archive():
     # videos = db_mapper.get_all_videos()
 
     videoname_contains = None
+    description_contains = None
 
     # Filter options combo box. Remove items that are in POST
     filter_options = {
@@ -34,6 +35,8 @@ def video_archive():
         "theDate": "Recorded Date"
     }
 
+    # 3-element list-
+    # 0: field name |  1: field label | 2: field value
     selected_filter_list = []
 
     if request.method == 'POST':
@@ -52,22 +55,29 @@ def video_archive():
                     videos=db_mapper.get_videos_filter_and_sort()
                 )
 
+            # Handle all filters
             elif x[0] == 'videoName_input':
                 videoname_contains = request.form['videoName_input']
-                selected_filter_list.append(["videoName", f"Video Name = {videoname_contains}"])
+                selected_filter_list.append(["videoName", "Video Name =", videoname_contains])
                 filter_options.pop('videoName')
+            elif x[0] == 'description_input':
+                description_contains = request.form['description_input']
+                selected_filter_list.append(["description", "Video Description =", description_contains])
+                filter_options.pop('description')
 
-            # If clicked filter x button remove from selected list
-            elif "_remove.x" in x[0]:
-                # input of type image returns two vals. One for x and one for x of click.
-                to_remove = x[0].replace("_remove.x","")
+            # Handling in JS now
+            # # If clicked filter x button remove from selected list
+            # elif "_remove.x" in x[0]:
+            #     # input of type image returns two vals. One for x and one for x of click.
+            #     to_remove = x[0].replace("_remove.x","")
 
                 # TODO: Repopulate dropdown with one that was removed
 
 
     # TODO: It would better if this function took the form input values in the request.form[] collection instead of individually
     videos = db_mapper.get_videos_filter_and_sort(
-        videoname_contains=videoname_contains
+        videoname_contains=videoname_contains,
+        description_contains=description_contains
     )
 
     return render_template(
