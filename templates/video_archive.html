@@ -59,11 +59,10 @@
 
         <br><br>
 
-
-
         <table style="height: 550px">
             <tbody>
                 <tr>
+                    <th>Thumbnail</th>
                     <th>Id</th>
                     <th>Video Name</th>
                     <th>Date</th>
@@ -71,6 +70,12 @@
                 </tr>
             {% for vid in videos %}
                 <tr class="video_row">
+                    <td id="thumbnail">
+                        <a href="video_detail?id={{ vid.id }}">
+                            <img src="{{ url_for('static', filename='thumbnails')}}/{{ vid.id }}.jpg" width=60 height=60>
+                        </a>
+
+                    </td>
                     <td id="id">{{ vid.id }}</td>
                     <td id="videoName">{{ vid.videoName }}</td>
                     <td id="theDate">{{ vid.theDate }}</td>

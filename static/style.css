@@ -56,3 +56,16 @@ h4{
     margin-left: auto;
     margin-right: auto;*/
 }
+
+table{
+    display: inline-block;
+    overflow: auto;
+}
+
+th{
+    position: sticky;
+    top:0px;
+    color: #FFFFFF;
+    background-color: #33B5E5;
+
+}
