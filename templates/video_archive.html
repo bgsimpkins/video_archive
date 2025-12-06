@@ -39,10 +39,12 @@
             {% for filter in selected_filter_list %}
                 <span id="{{ filter[0] }}_selected" class="selected_filter">
                     {{ filter[1] }} &nbsp
-                    <input type="text" name="{{ filter[0] }}_input" value="{{ filter[2] }}"> &nbsp <img class="x_filter_button" name="{{ filter[0] }}" src="{{ url_for('static', filename='x.png') }}"/>
+                    <input type="text" disabled name="{{ filter[0] }}_input" value="{{ filter[2] }}"> &nbsp <img class="x_filter_button" name="{{ filter[0] }}" src="{{ url_for('static', filename='x.png') }}"/>
                 </span>
+                &nbsp&nbsp
             {% endfor %}
         </div>
+        <br>
         <div id="new_filter_div">
             Select New Filter:
             <select name="filter_select" id="filter_select">
