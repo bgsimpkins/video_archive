@@ -6,8 +6,8 @@
 
 $(document).ready(function()
 {
-    var submitButton = null;
 
+    // Adding new filter. Populate field-specific prompts.
     $("#filter_select").on('click', function() {
 
         //Clear out previous value stuff
@@ -23,11 +23,12 @@ $(document).ready(function()
 
     });
 
-    //Since this is added dynamically we need to catch event using a static object (e.g., document)
-    $(document).on('click', '#add_filter', function() {
-
-        $("#filter_div").append("<br><b>BUTTS</b>");
-    });
+// Being handled server-side
+//    //Since this is added dynamically we need to catch event using a static object (e.g., document)
+//    $(document).on('click', '#add_filter', function() {
+//
+//        $("#filter_div").append("<br><b>BUTTS</b>");
+//    });
 
     //Remove selected filter item when x clicked
     $(".x_filter_button").click( function(){
