@@ -75,7 +75,6 @@ class DBMapper:
         vid.videoName = vid_data["videoName"] if vid_data["videoName"] != "None" else None
         vid.userName = vid_data["userName"] if vid_data["userName"] != "None" else None
         vid.type = vid_data["type"] if vid_data["type"] != "None" else None
-
         vid.theDate = vid_data["theDate"] if vid_data["theDate"] != "None" else None
         vid.addDate = vid_data["addDate"] if vid_data["addDate"] != "None" else None
         vid.location = vid_data["location"] if vid_data["location"] != "None" else None
