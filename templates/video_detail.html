@@ -7,7 +7,7 @@
     <title>Video Archive</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!--script src="{{ url_for('static', filename='video_archive.js') }}"></script-->
+    <script src="{{ url_for('static', filename='video_detail.js') }}"></script>
 </head>
 
 <body>
@@ -21,9 +21,74 @@
         {% endif%}
         </div>
 
-    <video width="640" height="480" controls>
-        <source src="{{ url_for('static', filename='')}}{{ video_file }}" type="video/mp4">
-    </video>
+    <div id = "video_player" class="left_split">
+        <video width="640" height="480" controls>
+            <source src="{{ url_for('static', filename='')}}{{ video.link }}" type="video/mp4">
+        </video>
+    </div>
+
+    <div id = "video_detail" class="right_split">
+
+        <h3>Video Details</h3>
+        <form id="video_detail_form" method="post">
+            <button id="edit_detail_button" name="edit_detail_button" value="Edit Details" style="width: 100px; height: 30px">Edit Details</button>
+            &nbsp &nbsp &nbsp
+
+            <input type="submit" id="save_detail_input" name="save_detail_input" value="Save Detail">
+            <br><br>
+            <table style="...">
+                <tr>
+                    <td>Video Id:</td>
+                    <td><input class="detail_value_field_readonly" type="text" disabled name="id" value="{{ video.id }}">
+                </tr>
+                <tr>
+                    <td>Video Name:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="videoName" value="{{ video.videoName }}">
+                </tr>
+                <tr>
+                    <td>User Name:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="userName" value="{{ video.userName }}">
+                </tr>
+                <tr>
+                    <td>Tags:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="type" value="{{ video.type }}">
+                </tr>
+                <tr>
+                    <td>Recorded Date:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="theDate" value="{{ video.theDate }}">
+                </tr>
+                <tr>
+                    <td>Added Date:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="addDate" value="{{ video.addDate }}">
+                </tr>
+                <tr>
+                    <td>Location:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="location" value="{{ video.location }}">
+                </tr>
+                <tr>
+                    <td>Primary Actor:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="primaryActor" value="{{ video.primaryActor }}">
+                </tr>
+                <tr>
+                    <td>Secondary Actor:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="secondaryActor" value="{{ video.secondaryActor }}">
+                </tr>
+                <tr>
+                    <td>Link:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="link" value="{{ video.link }}">
+                </tr>
+                <tr>
+                    <td>Original File:</td>
+                    <td><input class="detail_value_field" type="text" disabled name="originalFile" value="{{ video.originalFile }}">
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><textarea class="detail_value_field" name="description" disabled rows="6" cols="30">{{ video.description }}</textarea></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
 
 
 

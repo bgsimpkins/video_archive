@@ -66,9 +66,27 @@ class DBMapper:
         pass
 
     # TODO: fix to use list that in from POST
-    def update_video(self, id):
+    def update_video(self, id, vid_data):
         session = Session(self.engine)
+
+        vid = session.query(self.Video).filter_by(id=id).first()
+
+        # Nulls are here as 'None' string
+        vid.videoName = vid_data["videoName"] if vid_data["videoName"] != "None" else None
+        vid.userName = vid_data["userName"] if vid_data["userName"] != "None" else None
+        vid.type = vid_data["type"] if vid_data["type"] != "None" else None
+
+        vid.theDate = vid_data["theDate"] if vid_data["theDate"] != "None" else None
+        vid.addDate = vid_data["addDate"] if vid_data["addDate"] != "None" else None
+        vid.location = vid_data["location"] if vid_data["location"] != "None" else None
+        vid.primaryActor = vid_data["primaryActor"] if vid_data["primaryActor"] != "None" else None
+        vid.secondaryActor = vid_data["secondaryActor"] if vid_data["userName"] != "None" else None
+        vid.description = vid_data["description"] if vid_data["description"] != "None" else None
+        vid.link = vid_data["link"] if vid_data["link"] != "None" else None
+        vid.originalFile = vid_data["originalFile"] if vid_data["originalFile"] != "None" else None
+
         session.commit()
+        session.close()
 
     # TODO: Could be made more dynamic by passing in lists/dictionaries for contains, between, etc
     # and looping through them and processing dynamically

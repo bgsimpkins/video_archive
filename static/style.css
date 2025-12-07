@@ -69,3 +69,21 @@ th{
     background-color: #33B5E5;
 
 }
+
+.left_split{
+    width: 50%;
+    height:500px;
+    float: left;
+}
+
+.right_split{
+    margin-left: 50%;
+    height:500px;
+}
+
+#save_detail_input{
+    visibility: hidden;
+    background-color: #7BAB5E;
+    width: 100px;
+    height: 30px;
+}
