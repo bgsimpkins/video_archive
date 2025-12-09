@@ -14,7 +14,11 @@ $(document).ready(function()
         });
     });
 
+    $("#edit_thumbnail_button").click(function(){
+        $("#edit_thumbnail_button").prop("disabled", true);
+        $("#thumbnail_div").append("<span> Seconds in:&nbsp <input type='text' id='thumbnail_input' name= 'thumbnail_input'> <input type='submit' name='thumbnail_submit' value='Save'> </span>");
 
+    });
 
 
 });
