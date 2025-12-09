@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
+import datetime
 
 load_dotenv(override=False)
 
@@ -88,15 +89,28 @@ def video_detail():
     id = request.args.get('id')
     db_mapper = DBMapper(config_vals)
 
-    if request.method == 'POST':
-        print(f"updating video {id}")
-        db_mapper.update_video(id, request.form)
-
     vid = db_mapper.get_one_video(id)
+
+    alert_text = None
+
+    if request.method == 'POST':
+
+        if 'thumbnail_input' in request.form:
+            thumbnail_time = str(datetime.timedelta(seconds=int(request.form["thumbnail_input"])))
+            ffmpeg_call = f"ffmpeg -y -i static/{vid.link} -ss {thumbnail_time} -vframes 1 static/thumbnails/{vid.id}.jpg"
+            os.system(ffmpeg_call)
+            alert_text = "Thumbnail updated!"
+
+        else:
+            print(f"updating video {id}")
+            db_mapper.update_video(id, request.form)
+
+
 
     return render_template(
         'video_detail.html',
-        video=vid
+        video=vid,
+        alert_text=alert_text
     )
 
 
