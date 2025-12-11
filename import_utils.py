@@ -1,4 +1,6 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 import shutil
 from video_archive_db_tools import DBMapper
@@ -25,7 +27,8 @@ def batch_import(config_vals):
 
         # TODO: If mod, run ffmpeg to convert. Set file to new filename
         if format == "mod":
-            pass
+            print("Conversion of MOD to mp4 not supporeted yet. Exiting!")
+            sys.exit(1)
 
         # Create base Video record
         vid = db_mapper.Video()
