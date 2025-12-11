@@ -97,7 +97,8 @@ class DBMapper:
             description_contains=None,
             date_between=None,
             sort_var1=None,
-            sort_var2=None
+            sort_var2=None,
+            pagination=[30,1]
     ):
         # videoName (contains), type/tag (contains), description (contains), date (between)
 
@@ -126,6 +127,9 @@ class DBMapper:
 
         if sort_var2 is not None:
             stmt = stmt.order_by(sa.text(sort_var2))
+
+        stmt = stmt.limit(pagination[0])
+        stmt = stmt.offset(pagination[1])
 
         video_list = []
 
