@@ -42,6 +42,10 @@ $(document).ready(function()
 
     });
 
+    $("#add_video_button").click(function(){
+        $("#new_video_div").css("visibility", "visible");
+    });
+
 
 
 });

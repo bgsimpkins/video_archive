@@ -27,7 +27,12 @@
     <h3>Videos:</h3>
 
     <form id="videos_form" method="post">
-        <input type="submit" id="add_video" name="add_video" value="Add New Video">
+        <button type="button" id="add_video_button" name="add_video">Add New Video</button>
+        <div id="new_video_div" style="visibility: hidden;">
+            <input type=file name=new_video_file>
+            <input type=submit value=new_video_submit>
+        </div>
+
         <br><br>
 
         <h4>Filters:</h4>
@@ -58,6 +63,26 @@
         </div>
 
         <br><br>
+
+        <!--TODO: Should we allow the adjust page size?? -->
+        <!--Page Size: &nbsp-->
+        <!--input type="text" id="page_size_input" name="page_size_input" value="{{ pagination_list[2] }}" style="width:40px; height:15px;"-->
+        <br>
+
+        <!--Showing records {{ pagination_list[1] }} - {{ pagination_list[1] + pagination_list[2] - 1 }}  of {{ pagination_list[0] }}-->
+        Showing records {{ pagination_list[1] }} - {% if pagination_list[1] + pagination_list[2] - 1 >= pagination_list[0] %} {{ pagination_list[0] }} {% else %} {{ pagination_list[1] + pagination_list[2] - 1 }} {% endif %} of {{ pagination_list[0] }}
+
+        <!-- Return pagination values as hidden input. Probably a better way-->
+        <input type="hidden" id="pagination_limit" name="pagination_limit" value="{{ pagination_list[2] }}">
+        <input type="hidden" id="pagination_offset" name="pagination_offset" value="{{ pagination_list[1] }}">
+
+
+        &nbsp&nbsp
+        <input type="submit" id="prev_page" name="prev_page" value="<<" {% if pagination_list[1] == 1 %} disabled {% endif %}>
+        &nbsp&nbsp
+        <input type="submit" id="next_page" name="next_page" value=">>" {% if pagination_list[1] + pagination_list[2] >= pagination_list[0] %} disabled {% endif %}>
+
+        <br>
 
         <table style="height: 550px">
             <tbody>

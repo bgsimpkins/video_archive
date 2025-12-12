@@ -39,6 +39,9 @@ def video_archive():
     # 0: field name |  1: field label | 2: field value
     selected_filter_list = []
 
+    # 0: Num records | 1: offset | 2: limit/range
+    pagination_list = [30,1,30]
+
     if request.method == 'POST':
         # post = request.form
         # print('POST!')
@@ -46,12 +49,19 @@ def video_archive():
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
 
+            # Get pagination values
+            pagination_list[1] = int(request.form['pagination_offset'])
+
             if x[0] == "clear_filters":
                 return render_template(
                     'video_archive.html',
                     filter_options=filter_options,
                     videos=db_mapper.get_videos_filter_and_sort()
                 )
+            elif x[0] == "next_page":
+                pagination_list[1] = int(pagination_list[1]) + int(pagination_list[2])
+            elif x[0] == "prev_page":
+                pagination_list[1] = int(pagination_list[1]) - int(pagination_list[2])
 
             # Handle all filters
             if x[0] == 'videoName_input':
@@ -69,17 +79,29 @@ def video_archive():
             #     # input of type image returns two vals. One for x and one for x of click.
             #     to_remove = x[0].replace("_remove.x","")
 
+
+
+
+
+
+
     # TODO: It would better if this function took the form input values in a collection instead of individually so can handle dynamically
-    videos = db_mapper.get_videos_filter_and_sort(
+    videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
         videoname_contains=videoname_contains,
-        description_contains=description_contains
+        description_contains=description_contains,
+        pagination=[pagination_list[1],pagination_list[2]]
     )
+
+    # Pagination
+    #pagination_list[0] = len(videos)
+
 
     return render_template(
         'video_archive.html',
         filter_options=filter_options,
         selected_filter_list=selected_filter_list,
-        videos=videos
+        videos=videos,
+        pagination_list=pagination_list
     )
 
 
@@ -104,8 +126,6 @@ def video_detail():
         else:
             print(f"updating video {id}")
             db_mapper.update_video(id, request.form)
-
-
 
     return render_template(
         'video_detail.html',
