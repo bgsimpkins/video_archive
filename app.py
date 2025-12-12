@@ -25,6 +25,9 @@ def video_archive():
 
     videoname_contains = None
     description_contains = None
+    location_contains = None
+    tags_contains = None
+    date_between = ['1970-01-01', '9999-12-31']
 
     # Filter options combo box. Remove items that are in POST
     filter_options = {
@@ -80,6 +83,26 @@ def video_archive():
                 selected_filter_list.append(["description", "Video Description =", description_contains])
                 filter_options.pop('description')
 
+            if x[0] == 'location_input':
+                location_contains = request.form['location_input']
+                selected_filter_list.append(["location", "Location =", location_contains])
+                filter_options.pop('location')
+
+            if x[0] == 'tags_input':
+                tags_contains = request.form['tags_input']
+                selected_filter_list.append(["tags", "Tags =", tags_contains])
+                filter_options.pop('tags')
+
+            if x[0] == "date_start_input":
+                date_between = [ request.form['date_start_input'], request.form['date_end_input'] ]
+                selected_filter_list.append(["theDate", "Date Range =", f"{date_between[0]} to {date_between[1]}"])
+                filter_options.pop('theDate')
+
+            if x[0] == 'theDate_input':
+                date_spl = request.form['theDate_input'].split("to")
+                selected_filter_list.append(["theDate", "Date Range =", f"{date_spl[0].strip()} to {date_between[1].strip()}"])
+                #filter_options.pop('theDate')
+
 
             # Handling in JS now
             # # If clicked filter x button remove from selected list
@@ -97,6 +120,9 @@ def video_archive():
     videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
         videoname_contains=videoname_contains,
         description_contains=description_contains,
+        location_contains=location_contains,
+        tags_contains=tags_contains,
+        date_between=date_between,
         pagination=[pagination_list[1],pagination_list[2]]
     )
 

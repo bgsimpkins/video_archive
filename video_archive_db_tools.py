@@ -92,7 +92,7 @@ class DBMapper:
     def get_videos_filter_and_sort(
             self,
             videoname_contains=None,
-            tag_contains=None,
+            tags_contains=None,
             location_contains=None,
             description_contains=None,
             date_between=None,
@@ -110,8 +110,8 @@ class DBMapper:
         if videoname_contains is not None:
             videoname_contains = videoname_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.videoName.like(f"%{videoname_contains}%"))
-        if tag_contains is not None:
-            tag_contains = tag_contains.replace(' ', "%")
+        if tags_contains is not None:
+            tag_contains = tags_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.type.like(f"%{tag_contains}%"))
         if location_contains is not None:
             location_contains = location_contains.replace(' ', "%")
@@ -120,7 +120,12 @@ class DBMapper:
             description_contains = description_contains.replace(' ', "%")
             stmt = stmt.where(self.Video.description.like(f"%{description_contains}%"))
         if date_between is not None:
-            stmt = stmt.filter(self.Video.theDate.between(date_between[0], date_between[1]))
+            stmt = stmt.filter(
+                sa.or_(
+                    self.Video.theDate.between(date_between[0], date_between[1]),
+                    self.Video.theDate == 0
+                )
+            )
 
         if sort_var1 is not None:
             stmt = stmt.order_by(sa.text(sort_var1))

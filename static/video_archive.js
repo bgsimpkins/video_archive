@@ -18,6 +18,16 @@ $(document).ready(function()
         }
         else if ($(this).val() == "description"){
             $("#filter_value_panel").append("Enter description keywords:&nbsp <input type='text' id='description_input' name='description_input'>");
+        }
+        else if ($(this).val() == "location"){
+            $("#filter_value_panel").append("Enter location keywords:&nbsp <input type='text' id='location_input' name='location_input'>");
+        }
+        else if ($(this).val() == "tags"){
+            $("#filter_value_panel").append("Enter tags keywords:&nbsp <input type='text' id='tags_input' name='tags_input'>");
+        }
+        else if ($(this).val() == "theDate"){
+            $("#filter_value_panel").append("Enter date range:&nbsp <input type='text' id='date_start_input' name='date_start_input' value='1970-01-01' style='width:80px'> &nbsp to &nbsp <input type='text' id='date_end_input' name='date_end_input' value='9999-12-31' style='width:80px'>");
+            //$("#filter_value_panel").append("Enter date range:&nbsp <input type='hidden' id='theDate_input' name='theDate_input' value='1970-01-01 to 9999-12-31'>");
         };
         $("#filter_value_panel").append("<input type='submit' id='add_filter' name='add_filter' value='Add Filter'>");
 
