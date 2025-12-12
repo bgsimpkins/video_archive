@@ -99,6 +99,7 @@ def video_archive():
 
             if x[0] == 'theDate_input':
                 date_spl = request.form['theDate_input'].split("to")
+                date_between = [date_spl[0].strip(), date_spl[1].strip()]
                 selected_filter_list.append(["theDate", "Date Range =", f"{date_spl[0].strip()} to {date_between[1].strip()}"])
                 #filter_options.pop('theDate')
 
