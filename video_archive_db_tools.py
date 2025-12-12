@@ -137,7 +137,9 @@ class DBMapper:
         row_count = conn.execute(stmt).rowcount
 
         stmt = stmt.limit(pagination[1])
-        stmt = stmt.offset(pagination[0])
+
+        # We've been handling offset as 1-based for display. It's 0-based in MySQL so decrement
+        stmt = stmt.offset(pagination[0]-1)
 
         video_list = []
 
