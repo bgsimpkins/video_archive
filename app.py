@@ -143,6 +143,7 @@ def video_detail():
         else:
             print(f"updating video {id}")
             db_mapper.update_video(id, request.form)
+            vid = db_mapper.get_one_video(id)
 
     return render_template(
         'video_detail.html',
