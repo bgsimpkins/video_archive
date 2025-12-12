@@ -69,8 +69,10 @@
         <!--input type="text" id="page_size_input" name="page_size_input" value="{{ pagination_list[2] }}" style="width:40px; height:15px;"-->
         <br>
 
-        <!--Showing records {{ pagination_list[1] }} - {{ pagination_list[1] + pagination_list[2] - 1 }}  of {{ pagination_list[0] }}-->
-        Showing records {{ pagination_list[1] }} - {% if pagination_list[1] + pagination_list[2] - 1 >= pagination_list[0] %} {{ pagination_list[0] }} {% else %} {{ pagination_list[1] + pagination_list[2] - 1 }} {% endif %} of {{ pagination_list[0] }}
+        <!--show page range. If on last page show total record count as range end-->
+        Showing records {{ pagination_list[1] }}
+            - {% if pagination_list[1] + pagination_list[2] - 1 >= pagination_list[0] %} {{ pagination_list[0] }} {% else %} {{ pagination_list[1] + pagination_list[2] - 1 }} {% endif %}
+            of {{ pagination_list[0] }}
 
         <!-- Return pagination values as hidden input. Probably a better way-->
         <input type="hidden" id="pagination_limit" name="pagination_limit" value="{{ pagination_list[2] }}">
