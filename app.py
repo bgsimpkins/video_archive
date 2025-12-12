@@ -53,7 +53,6 @@ def video_archive():
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
 
-
             if x[0] == "clear_filters":
                 pagination_list[1] = 1
                 videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
@@ -103,19 +102,6 @@ def video_archive():
                 selected_filter_list.append(["theDate", "Date Range =", f"{date_spl[0].strip()} to {date_between[1].strip()}"])
                 #filter_options.pop('theDate')
 
-
-            # Handling in JS now
-            # # If clicked filter x button remove from selected list
-            # elif "_remove.x" in x[0]:
-            #     # input of type image returns two vals. One for x and one for x of click.
-            #     to_remove = x[0].replace("_remove.x","")
-
-
-
-
-
-
-
     # TODO: It would better if this function took the form input values in a collection instead of individually so can handle dynamically
     videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
         videoname_contains=videoname_contains,
@@ -125,10 +111,6 @@ def video_archive():
         date_between=date_between,
         pagination=[pagination_list[1],pagination_list[2]]
     )
-
-    # Pagination
-    #pagination_list[0] = len(videos)
-
 
     return render_template(
         'video_archive.html',
