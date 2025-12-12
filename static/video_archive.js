@@ -38,6 +38,8 @@ $(document).ready(function()
         //Remote the span for this filter
         $("#"+$(this).attr("name")+"_selected").remove();
 
+        //Reuse 'add_filter' input (used above) so that offset is set back to 1 when form processed
+        $("#filter_value_panel").append("<input type='hidden' id='add_filter' name='add_filter' value='Add Filter'>");
         $("#videos_form").submit();
 
     });

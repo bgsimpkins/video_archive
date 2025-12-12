@@ -45,33 +45,41 @@ def video_archive():
     if request.method == 'POST':
         # post = request.form
         # print('POST!')
+        pagination_list[1] = int(request.form['pagination_offset'])
 
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
 
-            # Get pagination values
-            pagination_list[1] = int(request.form['pagination_offset'])
 
             if x[0] == "clear_filters":
+                pagination_list[1] = 1
+                videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
+                    pagination=[pagination_list[1], pagination_list[2]]
+                )
                 return render_template(
                     'video_archive.html',
                     filter_options=filter_options,
-                    videos=db_mapper.get_videos_filter_and_sort()
+                    videos=videos,
+                    pagination_list=pagination_list
                 )
             elif x[0] == "next_page":
                 pagination_list[1] = int(pagination_list[1]) + int(pagination_list[2])
             elif x[0] == "prev_page":
                 pagination_list[1] = int(pagination_list[1]) - int(pagination_list[2])
+            elif x[0] == "add_filter":
+                pagination_list[1] = 1
 
             # Handle all filters
             if x[0] == 'videoName_input':
                 videoname_contains = request.form['videoName_input']
                 selected_filter_list.append(["videoName", "Video Name =", videoname_contains])
                 filter_options.pop('videoName')
+
             if x[0] == 'description_input':
                 description_contains = request.form['description_input']
                 selected_filter_list.append(["description", "Video Description =", description_contains])
                 filter_options.pop('description')
+
 
             # Handling in JS now
             # # If clicked filter x button remove from selected list
