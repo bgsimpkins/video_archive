@@ -96,7 +96,7 @@ class DBMapper:
             location_contains=None,
             description_contains=None,
             date_between=None,
-            sort_var1=None,
+            sort_var1="theDate DESC",
             sort_var2=None,
             pagination=[1,30]
     ):
