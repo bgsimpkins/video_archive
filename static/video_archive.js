@@ -58,6 +58,10 @@ $(document).ready(function()
         $("#new_video_div").css("visibility", "visible");
     });
 
-
+    $(".video_row").click(function(){
+        //#alert("stuff!");
+        var id =  $(this).find("#id").text();
+        $(location).attr('href', "video_detail?id="+id);
+    });
 
 });

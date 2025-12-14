@@ -103,10 +103,11 @@
                         </a>
 
                     </td>
-                    <td id="id">{{ vid.id }}</td>
-                    <td id="videoName">{{ vid.videoName }}</td>
-                    <td id="theDate">{{ vid.theDate }}</td>
-                    <td id="type">{{ vid.type }}</td>
+                    <!--These link are redundance since the row click is handled in javascript. Leave in so hover over icon change-->
+                    <td id="id" ><a class="video_row_link" href="video_detail?id={{ vid.id }}">{{ vid.id }}</a></td>
+                    <td id="videoName"><a class="video_row_link" href="video_detail?id={{ vid.id }}">{{ vid.videoName }}</a></td>
+                    <td id="theDate"><a class="video_row_link" href="video_detail?id={{ vid.id }}">{{ vid.theDate }}</a></td>
+                    <td id="type"><a class="video_row_link" href="video_detail?id={{ vid.id }}">{{ vid.type }}</a></td>
                 </tr>
             {% endfor %}
 

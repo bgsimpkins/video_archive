@@ -87,3 +87,12 @@ th{
     width: 100px;
     height: 30px;
 }
+
+tr:hover{
+    background-color:#E0DCDC;
+}
+
+.video_row_link{
+    text-decoration: none;
+    color: black;
+}
