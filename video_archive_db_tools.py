@@ -69,7 +69,12 @@ class DBMapper:
         session.close()
 
     def delete_video(self, id):
-        pass
+        session = Session(self.engine)
+        vid = session.query(self.Video).filter_by(id=id).first()
+
+        session.delete(vid)
+        session.commit()
+        session.close()
 
     # TODO: fix to use list that in from POST
     def update_video(self, id, vid_data):

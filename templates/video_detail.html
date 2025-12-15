@@ -27,7 +27,17 @@
         </video>
 
         <br><br>
-        <form id="thumbnail_form" method="post">
+        <form id="video_form" method="post">
+            <div id="delete_video_div">
+                <button type="button" id="delete_video_button" name="delete_video_button" style="background-color: #85392D; color: #FFFFFF;">Delete Video</button>
+                <br>
+                <div id="delete_confirm" style="visibility: hidden; background-color: #E0DCDC;">
+                    <input type="submit" id="delete_video_button_submit" name="delete_video_button_submit" value="Really Delete?">
+                    &nbsp
+                    <input type="submit" id="cancel_video_button_submit" name="cancel_video_button_submit" value="Cancel">
+                </div>
+            </div>
+            <br>
             <div id="thumbnail_div">
                 <button id="edit_thumbnail_button" name="edit_thumbnail_button">Set Thumbnail</button>
             </div>

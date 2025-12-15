@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
 import datetime
@@ -148,6 +148,11 @@ def video_detail():
             ffmpeg_call = f"ffmpeg -y -i static/{vid.link} -ss {thumbnail_time} -vframes 1 static/thumbnails/{vid.id}.jpg"
             os.system(ffmpeg_call)
             alert_text = "Thumbnail updated!"
+
+        elif 'delete_video_button_submit' in request.form:
+            print(f"____Deleting video: {id}")
+            db_mapper.delete_video(id)
+            redirect(url_for('video_archive'))
 
         else:
             print(f"updating video {id}")

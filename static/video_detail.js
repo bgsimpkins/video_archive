@@ -20,5 +20,7 @@ $(document).ready(function()
 
     });
 
-
+    $("#delete_video_button").click(function(){
+        $("#delete_confirm").css("visibility","visible");
+    });
 });

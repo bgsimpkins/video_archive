@@ -88,8 +88,8 @@ th{
     height: 30px;
 }
 
-tr:hover{
-    background-color:#E0DCDC;
+tr.video_row:hover{
+        background-color:#E0DCDC;
 }
 
 .video_row_link{
