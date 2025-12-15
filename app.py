@@ -23,6 +23,9 @@ def video_archive():
     db_mapper = DBMapper(config_vals)
     # videos = db_mapper.get_all_videos()
 
+    # Special filter to show videos that need metadata added
+    todo_filter = False
+
     videoname_contains = None
     description_contains = None
     location_contains = None
@@ -48,6 +51,10 @@ def video_archive():
     if request.method == 'POST':
         # post = request.form
         # print('POST!')
+
+        if "todo_submit" in request.form:
+            todo_filter = True
+
         pagination_list[1] = int(request.form['pagination_offset'])
 
         # TODO: This is pretty hard-coded. Could be handled more eloquently
@@ -105,6 +112,7 @@ def video_archive():
 
     # TODO: It would better if this function took the form input values in a collection instead of individually so can handle dynamically
     videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
+        todo=todo_filter,
         videoname_contains=videoname_contains,
         description_contains=description_contains,
         location_contains=location_contains,
@@ -118,7 +126,8 @@ def video_archive():
         filter_options=filter_options,
         selected_filter_list=selected_filter_list,
         videos=videos,
-        pagination_list=pagination_list
+        pagination_list=pagination_list,
+        todo=todo_filter
     )
 
 

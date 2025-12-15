@@ -54,6 +54,12 @@ class DBMapper:
 
         return vid
 
+    def get_todo_videos(self):
+        with self.engine.connect() as conn:
+            stmt = sa.select(self.Video).where(sa.or_(self.Video.id == self.Video.videoName, self.Video.videoName == None))
+
+
+
     # TODO: fix to use list that in from POST
     def add_new_video(self, video):
         session = Session(self.engine)
@@ -91,6 +97,7 @@ class DBMapper:
     # and looping through them and processing dynamically
     def get_videos_filter_and_sort(
             self,
+            todo=False,
             videoname_contains=None,
             tags_contains=None,
             location_contains=None,
@@ -107,32 +114,39 @@ class DBMapper:
         # Build select statement and append filters if used
         stmt = sa.select(self.Video)
 
-        if videoname_contains is not None:
-            videoname_contains = videoname_contains.replace(' ', "%")
-            stmt = stmt.where(self.Video.videoName.like(f"%{videoname_contains}%"))
-        if tags_contains is not None:
-            tag_contains = tags_contains.replace(' ', "%")
-            stmt = stmt.where(self.Video.type.like(f"%{tag_contains}%"))
-        if location_contains is not None:
-            location_contains = location_contains.replace(' ', "%")
-            stmt = stmt.where(self.Video.location.like(f"%{location_contains}%"))
-        if description_contains is not None:
-            description_contains = description_contains.replace(' ', "%")
-            stmt = stmt.where(self.Video.description.like(f"%{description_contains}%"))
-        if date_between is not None:
-            stmt = stmt.filter(
-                sa.or_(
-                    self.Video.theDate.between(date_between[0], date_between[1]),
-                    self.Video.theDate == 0
-                )
-            )
+        #### Filters
+        if todo:
+            stmt = stmt.where(sa.or_(self.Video.id == self.Video.videoName, self.Video.videoName is None))
 
+        else:
+            if videoname_contains is not None:
+                videoname_contains = videoname_contains.replace(' ', "%")
+                stmt = stmt.where(self.Video.videoName.like(f"%{videoname_contains}%"))
+            if tags_contains is not None:
+                tag_contains = tags_contains.replace(' ', "%")
+                stmt = stmt.where(self.Video.type.like(f"%{tag_contains}%"))
+            if location_contains is not None:
+                location_contains = location_contains.replace(' ', "%")
+                stmt = stmt.where(self.Video.location.like(f"%{location_contains}%"))
+            if description_contains is not None:
+                description_contains = description_contains.replace(' ', "%")
+                stmt = stmt.where(self.Video.description.like(f"%{description_contains}%"))
+            if date_between is not None:
+                stmt = stmt.filter(
+                    sa.or_(
+                        self.Video.theDate.between(date_between[0], date_between[1]),
+                        self.Video.theDate == 0
+                    )
+                )
+
+        #### Sorting
         if sort_var1 is not None:
             stmt = stmt.order_by(sa.text(sort_var1))
 
         if sort_var2 is not None:
             stmt = stmt.order_by(sa.text(sort_var2))
 
+        #### Pagination
         # Get total pre-pagination count
         row_count = conn.execute(stmt).rowcount
 
@@ -140,6 +154,7 @@ class DBMapper:
 
         # We've been handling offset as 1-based for display. It's 0-based in MySQL so decrement
         stmt = stmt.offset(pagination[0]-1)
+        ####################################
 
         video_list = []
 
