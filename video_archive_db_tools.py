@@ -1,8 +1,3 @@
-import os
-from typing import List
-
-import mysql.connector
-import pandas as pd
 import sqlalchemy as sa
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
