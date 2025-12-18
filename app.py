@@ -19,7 +19,6 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def video_archive():
-
     db_mapper = DBMapper(config_vals)
     # videos = db_mapper.get_all_videos()
 
@@ -46,16 +45,19 @@ def video_archive():
     selected_filter_list = []
 
     # 0: Num records | 1: offset | 2: limit/range
-    pagination_list = [30,1,30]
+    pagination_list = [30, 1, 30]
 
     if request.method == 'POST':
         # post = request.form
         # print('POST!')
 
+        pagination_list[1] = int(request.form['pagination_offset'])
+
         if "todo_submit" in request.form:
             todo_filter = True
-
-        pagination_list[1] = int(request.form['pagination_offset'])
+            pagination_list[1] = 1
+        elif "todo" in request.form:
+            todo_filter = True
 
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():
@@ -79,36 +81,38 @@ def video_archive():
                 pagination_list[1] = 1
 
             # Handle all filters
-            if x[0] == 'videoName_input':
-                videoname_contains = request.form['videoName_input']
-                selected_filter_list.append(["videoName", "Video Name =", videoname_contains])
-                filter_options.pop('videoName')
+            if not todo_filter:
+                if x[0] == 'videoName_input':
+                    videoname_contains = request.form['videoName_input']
+                    selected_filter_list.append(["videoName", "Video Name =", videoname_contains])
+                    filter_options.pop('videoName')
 
-            if x[0] == 'description_input':
-                description_contains = request.form['description_input']
-                selected_filter_list.append(["description", "Video Description =", description_contains])
-                filter_options.pop('description')
+                if x[0] == 'description_input':
+                    description_contains = request.form['description_input']
+                    selected_filter_list.append(["description", "Video Description =", description_contains])
+                    filter_options.pop('description')
 
-            if x[0] == 'location_input':
-                location_contains = request.form['location_input']
-                selected_filter_list.append(["location", "Location =", location_contains])
-                filter_options.pop('location')
+                if x[0] == 'location_input':
+                    location_contains = request.form['location_input']
+                    selected_filter_list.append(["location", "Location =", location_contains])
+                    filter_options.pop('location')
 
-            if x[0] == 'tags_input':
-                tags_contains = request.form['tags_input']
-                selected_filter_list.append(["tags", "Tags =", tags_contains])
-                filter_options.pop('tags')
+                if x[0] == 'tags_input':
+                    tags_contains = request.form['tags_input']
+                    selected_filter_list.append(["tags", "Tags =", tags_contains])
+                    filter_options.pop('tags')
 
-            if x[0] == "date_start_input":
-                date_between = [ request.form['date_start_input'], request.form['date_end_input'] ]
-                selected_filter_list.append(["theDate", "Date Range =", f"{date_between[0]} to {date_between[1]}"])
-                filter_options.pop('theDate')
+                if x[0] == "date_start_input":
+                    date_between = [request.form['date_start_input'], request.form['date_end_input']]
+                    selected_filter_list.append(["theDate", "Date Range =", f"{date_between[0]} to {date_between[1]}"])
+                    filter_options.pop('theDate')
 
-            if x[0] == 'theDate_input':
-                date_spl = request.form['theDate_input'].split("to")
-                date_between = [date_spl[0].strip(), date_spl[1].strip()]
-                selected_filter_list.append(["theDate", "Date Range =", f"{date_spl[0].strip()} to {date_between[1].strip()}"])
-                #filter_options.pop('theDate')
+                if x[0] == 'theDate_input':
+                    date_spl = request.form['theDate_input'].split("to")
+                    date_between = [date_spl[0].strip(), date_spl[1].strip()]
+                    selected_filter_list.append(
+                        ["theDate", "Date Range =", f"{date_spl[0].strip()} to {date_between[1].strip()}"])
+                    # filter_options.pop('theDate')
 
     # TODO: It would better if this function took the form input values in a collection instead of individually so can handle dynamically
     videos, pagination_list[0] = db_mapper.get_videos_filter_and_sort(
@@ -118,7 +122,7 @@ def video_archive():
         location_contains=location_contains,
         tags_contains=tags_contains,
         date_between=date_between,
-        pagination=[pagination_list[1],pagination_list[2]]
+        pagination=[pagination_list[1], pagination_list[2]]
     )
 
     return render_template(
@@ -133,7 +137,6 @@ def video_archive():
 
 @app.route('/video_detail', methods=['GET', 'POST'])
 def video_detail():
-
     id = request.args.get('id')
     db_mapper = DBMapper(config_vals)
 
@@ -167,7 +170,6 @@ def video_detail():
 
 
 if __name__ == '__main__':
-
     print('Starting web app..')
     app.run(
         host="0.0.0.0",

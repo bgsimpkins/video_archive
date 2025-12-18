@@ -65,6 +65,7 @@
         <br>
         <div id="todo_div">
             <input type="submit" id="todo_submit" name="todo_submit" value="TODO Filter" {% if todo %}disabled{% endif %}>
+            {% if todo %} <input type="hidden" name="todo"> {% endif %}
         </div>
 
         <br><br>
