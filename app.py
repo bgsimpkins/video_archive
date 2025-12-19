@@ -148,7 +148,7 @@ def video_detail():
 
         if 'thumbnail_input' in request.form:
             thumbnail_time = str(datetime.timedelta(seconds=int(request.form["thumbnail_input"])))
-            ffmpeg_call = f"ffmpeg -y -i static/{vid.link} -ss {thumbnail_time} -vframes 1 static/thumbnails/{vid.id}.jpg"
+            ffmpeg_call = f"ffmpeg -nostdin -y -i static/{vid.link} -ss {thumbnail_time} -vframes 1 static/thumbnails/{vid.id}.jpg"
             os.system(ffmpeg_call)
             alert_text = "Thumbnail updated!"
 
