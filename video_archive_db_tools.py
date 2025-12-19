@@ -164,3 +164,19 @@ class DBMapper:
 
         return video_list, row_count
 
+    def get_all_tags(self):
+        tag_dict = {}
+
+        conn = self.engine.connect()
+        stmt = sa.select(self.Video)
+        for row in conn.execute(stmt):
+            if row.type is None:
+                continue
+            tags = row.type.split()
+            for tag in tags:
+                if tag not in tag_dict:
+                    tag_dict[tag] = 1
+                else:
+                    tag_dict[tag] += 1
+
+        return tag_dict

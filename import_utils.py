@@ -81,6 +81,12 @@ def duplicate_check_bytes():
     print(filesize_dict)
 
 
+def show_tags_used(config_vals):
+
+    db_mapper = DBMapper(config_vals)
+    tags_dict = db_mapper.get_all_tags()
+    print(tags_dict)
+
 if __name__ == '__main__':
     load_dotenv(override=False)
     # load_dotenv(dotenv_path="/home/bsimpkins/PycharmProjects/video_archive/.env")
@@ -101,3 +107,5 @@ if __name__ == '__main__':
         batch_import(config_vals)
     if "DUPLICATE_CHECK_BYTES" in process_list:
         duplicate_check_bytes()
+    if "SHOW_ALL_TAGS_USED" in process_list:
+        show_tags_used(config_vals)
