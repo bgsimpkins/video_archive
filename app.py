@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Flask, render_template, request, redirect, url_for
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
@@ -10,7 +11,8 @@ config_vals = {
     "DB_HOST": os.getenv('DB_HOST'),
     "DB_NAME": os.getenv('DB_NAME'),
     "DB_USER": os.getenv('DB_USER'),
-    "DB_PASS": os.getenv('DB_PASS')
+    "DB_PASS": os.getenv('DB_PASS'),
+    "TESTING": os.getenv('TESTING')
 
 }
 
@@ -171,9 +173,12 @@ def video_detail():
 
 if __name__ == '__main__':
     print('Starting web app..')
+
+    # Start on 5004 for debugging. Command line argument <1> should be 5003 for prod.
+    port = 5004 if len(sys.argv) == 1 else sys.argv[1]
     app.run(
         host="0.0.0.0",
-        port=5003,
+        port=port,
         debug=True,
         use_reloader=False
     )
