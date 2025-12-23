@@ -101,6 +101,10 @@ def video_archive():
 
                 if x[0] == 'tags_input':
                     tags_contains = request.form['tags_input']
+                    # Sort tags
+                    tag_spl = tags_contains.split(" ")
+                    tag_spl.sort()
+                    tags_contains = " ".join(tag_spl)
                     selected_filter_list.append(["tags", "Tags =", tags_contains])
                     filter_options.pop('tags')
 
