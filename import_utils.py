@@ -87,6 +87,24 @@ def show_tags_used(config_vals):
     tags_dict = db_mapper.get_all_tags()
     print(tags_dict)
 
+
+def sort_tags(config_vals):
+    db_mapper = DBMapper(config_vals)
+    session = Session(db_mapper.engine)
+    # stmt = session.query(db_mapper.Video)
+    stmt = sa.select(db_mapper.Video)
+
+    for vid in session.execute(stmt).scalars():
+        if vid.type is not None:
+            tag_spl = vid.type.split()
+            tag_spl.sort()
+            print(tag_spl)
+            vid.type = " ".join(tag_spl)
+
+    session.commit()
+    session.close()
+
+
 if __name__ == '__main__':
     load_dotenv(override=False)
     # load_dotenv(dotenv_path="/home/bsimpkins/PycharmProjects/video_archive/.env")
@@ -97,7 +115,8 @@ if __name__ == '__main__':
         "DB_USER": os.getenv('DB_USER'),
         "DB_PASS": os.getenv('DB_PASS'),
         "IMPORT_UTILS_PROCESSES": os.getenv("IMPORT_UTILS_PROCESSES"),
-        "IMPORT_DIR": os.getenv('IMPORT_DIR')
+        "IMPORT_DIR": os.getenv('IMPORT_DIR'),
+        "SORT_TAGS": os.getenv('SORT_TAGS')
 
     }
 
@@ -109,3 +128,5 @@ if __name__ == '__main__':
         duplicate_check_bytes()
     if "SHOW_ALL_TAGS_USED" in process_list:
         show_tags_used(config_vals)
+    if "SORT_TAGS" in process_list:
+        sort_tags(config_vals)
