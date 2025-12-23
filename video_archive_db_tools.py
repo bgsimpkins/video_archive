@@ -180,3 +180,15 @@ class DBMapper:
                     tag_dict[tag] += 1
 
         return tag_dict
+
+    def get_locations(self):
+        loc_list = []
+
+        conn = self.engine.connect()
+        stmt = sa.select(self.Video.location).distinct().order_by(self.Video.location)
+        for row in conn.execute(stmt):
+            loc_list.append(row.location)
+
+        loc_list.remove("")
+        loc_list.remove(None)
+        return loc_list

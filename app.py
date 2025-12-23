@@ -171,6 +171,20 @@ def video_detail():
     )
 
 
+@app.route('/get_tags', methods=['GET', 'POST'])
+def get_tags():
+    db_mapper = DBMapper(config_vals)
+
+    return db_mapper.get_all_tags()
+
+
+@app.route('/get_locations', methods=['GET', 'POST'])
+def get_locations():
+    db_mapper = DBMapper(config_vals)
+
+    return db_mapper.get_locations()
+
+
 if __name__ == '__main__':
     print('Starting web app..')
 

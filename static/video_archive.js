@@ -20,7 +20,13 @@ $(document).ready(function()
             $("#filter_value_panel").append("Enter description keywords:&nbsp <input type='text' id='description_input' name='description_input'>");
         }
         else if ($(this).val() == "location"){
-            $("#filter_value_panel").append("Enter location keywords:&nbsp <input type='text' id='location_input' name='location_input'>");
+            $("#filter_value_panel").append("<select name='location_input' id='location_input'>");
+            $.get("get_locations",function(data){
+                $.each(data, function(key, val){
+                    $("#location_input").append("<option value='"+val+"'>"+val+"</option>")
+                });
+            });
+            //$("#filter_value_panel").append("Enter location keywords:&nbsp <input type='text' id='location_input' name='location_input'>");
         }
         else if ($(this).val() == "tags"){
             $("#filter_value_panel").append("Enter tags keywords:&nbsp <input type='text' id='tags_input' name='tags_input'>");
