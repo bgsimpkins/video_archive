@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 
 class DBMapper:
@@ -53,15 +54,33 @@ class DBMapper:
         with self.engine.connect() as conn:
             stmt = sa.select(self.Video).where(sa.or_(self.Video.id == self.Video.videoName, self.Video.videoName == None))
 
-
-
     # TODO: fix to use list that in from POST
-    def add_new_video(self, video):
+    def add_new_video(self, filename, format='mp4'):
+
         session = Session(self.engine)
-        # video = self.Video(id=666, videoName = 'test insert')
-        session.add(video)
+        # Create base Video record
+        vid = self.Video()
+
+        timestamp = datetime.strptime(filename.split(".")[0], "%Y%m%d_%H%M%S")
+
+        # Old id generating system was random, limited, and stupid. Just get max id and increment to get new one
+        conn = self.engine.connect()
+        max_id = conn.execute(sa.text("SELECT max(ID) FROM videos_main")).first()[0]
+
+        vid.id = max_id + 1
+        vid.videoName = vid.id
+        vid.theDate = timestamp
+        vid.addDate = datetime.now()
+        vid.userName = 'bsimpkins'
+        vid.originalFile = filename
+
+        vid.link = f"videos/{vid.id}.{format}"
+
+        session.add(vid)
         session.commit()
         session.close()
+
+        return max_id+1
 
     def delete_video(self, id):
         session = Session(self.engine)

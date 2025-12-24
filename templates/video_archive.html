@@ -26,14 +26,16 @@
 
     <h3>Videos:</h3>
 
-    <form id="videos_form" method="post">
+    <form id="new_video_form" method="post" enctype="multipart/form-data">
         <button type="button" id="add_video_button" name="add_video">Add New Video</button>
         <div id="new_video_div" style="visibility: hidden;">
             <input type=file name=new_video_file>
             <input type=submit value=new_video_submit>
         </div>
+    </form>
 
         <br><br>
+    <form id="videos_form" method="post">
 
         <h4>Filters:</h4>
         <input type="submit" id="clear_filters" name="clear_filters" value="Clear Filters">

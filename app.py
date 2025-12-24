@@ -3,6 +3,7 @@ import sys
 from flask import Flask, render_template, request, redirect, url_for
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import datetime
 
 load_dotenv(override=False)
@@ -23,6 +24,31 @@ app = Flask(__name__)
 def video_archive():
     db_mapper = DBMapper(config_vals)
     # videos = db_mapper.get_all_videos()
+
+    alert_text = None
+
+    if "deleted_id" in request.args:
+        deleted_id = request.args.get("deleted_id")
+        alert_text = f"Video id={deleted_id} deleted!"
+
+    if 'new_video_file' in request.files:
+        file = request.files['new_video_file']
+        if file.filename == "":
+            return 'No file selected, dummy!', 400
+        else:
+            format = file.filename.lower().split(".")[-1]
+
+            if format != "mp4":
+                alert_text = "Only mp4 files are supported!"
+            filename = secure_filename(file.filename)
+            file_id = db_mapper.add_new_video(filename)
+            file.save(f"static/videos/{file_id}.{format}")
+
+            # Create and save thumbnail
+            ffmpeg_call = f"ffmpeg -i static/videos/{file_id}.{format} -ss 00:00:02.000 -vframes 1 static/thumbnails/{file_id}.jpg"
+            os.system(ffmpeg_call)
+
+            return redirect(f"{url_for('video_detail')}?id={file_id}")
 
     # Special filter to show videos that need metadata added
     todo_filter = False
@@ -137,7 +163,8 @@ def video_archive():
         selected_filter_list=selected_filter_list,
         videos=videos,
         pagination_list=pagination_list,
-        todo=todo_filter
+        todo=todo_filter,
+        alert_text=alert_text
     )
 
 
@@ -161,7 +188,9 @@ def video_detail():
         elif 'delete_video_button_submit' in request.form:
             print(f"____Deleting video: {id}")
             db_mapper.delete_video(id)
-            redirect(url_for('video_archive'))
+            os.remove(f"static/videos/{vid.id}.mp4")
+            os.remove(f"static/thumbnails/{vid.id}.jpg")
+            return redirect(f"{url_for('video_archive')}?deleted_id={id}")
 
         else:
             print(f"updating video {id}")
