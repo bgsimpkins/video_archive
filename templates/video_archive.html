@@ -27,10 +27,12 @@
     <h3>Videos:</h3>
 
     <form id="new_video_form" method="post" enctype="multipart/form-data">
-        <button type="button" id="add_video_button" name="add_video">Add New Video</button>
+        <!--button type="button" id="add_video_button" name="add_video">Add New Video</button-->
+        <label for="add_video_button">New Video:</label>
+        <input type="file" id="add_video_button" name="new_video_file">
         <div id="new_video_div" style="visibility: hidden;">
-            <input type=file name=new_video_file>
-            <input type=submit value=new_video_submit>
+            <br>
+            <input type="submit" id="add_new_video_submit" value="Upload Video">
         </div>
     </form>
 
@@ -124,6 +126,9 @@
         </table>
     </form>
 
+    <div id="overlay" hidden>
+        <img src="{{ url_for('static', filename='throbber_13.gif') }} ">
+    </div>
 
 </body>
 

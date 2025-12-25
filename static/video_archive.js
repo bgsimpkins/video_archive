@@ -70,4 +70,9 @@ $(document).ready(function()
         $(location).attr('href', "video_detail?id="+id);
     });
 
+    $("#new_video_form").on('submit', function(event){
+        $("#overlay").show();
+
+    });
+
 });

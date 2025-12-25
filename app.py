@@ -48,7 +48,7 @@ def video_archive():
             ffmpeg_call = f"ffmpeg -i static/videos/{file_id}.{format} -ss 00:00:02.000 -vframes 1 static/thumbnails/{file_id}.jpg"
             os.system(ffmpeg_call)
 
-            return redirect(f"{url_for('video_detail')}?id={file_id}")
+            return redirect(f"{url_for('video_detail')}?id={file_id}&edit=true")
 
     # Special filter to show videos that need metadata added
     todo_filter = False
@@ -171,6 +171,7 @@ def video_archive():
 @app.route('/video_detail', methods=['GET', 'POST'])
 def video_detail():
     id = request.args.get('id')
+    edit = True if 'edit' in request.args else None
     db_mapper = DBMapper(config_vals)
 
     vid = db_mapper.get_one_video(id)
@@ -200,7 +201,8 @@ def video_detail():
     return render_template(
         'video_detail.html',
         video=vid,
-        alert_text=alert_text
+        alert_text=alert_text,
+        edit=edit
     )
 
 

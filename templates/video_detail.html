@@ -49,10 +49,10 @@
 
         <h3>Video Details</h3>
         <form id="video_detail_form" method="post">
-            <button id="edit_detail_button" name="edit_detail_button" value="Edit Details" style="width: 100px; height: 30px">Edit Details</button>
+            <button id="edit_detail_button" {% if edit %} disabled {% endif %}  name="edit_detail_button" value="Edit Details" style="width: 100px; height: 30px" >Edit Details</button>
             &nbsp &nbsp &nbsp
 
-            <input type="submit" id="save_detail_input" name="save_detail_input" value="Save Detail">
+            <input type="submit" id="save_detail_input" name="save_detail_input" value="Save Detail" {% if not edit %} style="visibility: hidden;" {% endif %}>
             <br><br>
             <table style="...">
                 <tr>
@@ -61,47 +61,47 @@
                 </tr>
                 <tr>
                     <td>Video Name:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="videoName" value="{{ video.videoName }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="videoName" value="{{ video.videoName }}">
                 </tr>
                 <tr>
                     <td>User Name:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="userName" value="{{ video.userName }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="userName" value="{{ video.userName }}">
                 </tr>
                 <tr>
                     <td>Tags:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="type" value="{{ video.type }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="type" value="{{ video.type }}">
                 </tr>
                 <tr>
                     <td>Recorded Date:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="theDate" value="{{ video.theDate }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="theDate" value="{{ video.theDate }}">
                 </tr>
                 <tr>
                     <td>Added Date:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="addDate" value="{{ video.addDate }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="addDate" value="{{ video.addDate }}">
                 </tr>
                 <tr>
                     <td>Location:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="location" value="{{ video.location }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="location" value="{{ video.location }}">
                 </tr>
                 <tr>
                     <td>Primary Actor:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="primaryActor" value="{{ video.primaryActor }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="primaryActor" value="{{ video.primaryActor }}">
                 </tr>
                 <tr>
                     <td>Secondary Actor:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="secondaryActor" value="{{ video.secondaryActor }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="secondaryActor" value="{{ video.secondaryActor }}">
                 </tr>
                 <tr>
                     <td>Link:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="link" value="{{ video.link }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="link" value="{{ video.link }}">
                 </tr>
                 <tr>
                     <td>Original File:</td>
-                    <td><input class="detail_value_field" type="text" disabled name="originalFile" value="{{ video.originalFile }}">
+                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="originalFile" value="{{ video.originalFile }}">
                 </tr>
                 <tr>
                     <td>Description:</td>
-                    <td><textarea class="detail_value_field" name="description" disabled rows="6" cols="30">{{ video.description }}</textarea></td>
+                    <td><textarea class="detail_value_field" name="description" {% if not edit %} disabled {% endif %} rows="6" cols="30">{{ video.description }}</textarea></td>
                 </tr>
 
             </table>
