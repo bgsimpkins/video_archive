@@ -8,6 +8,8 @@ $(document).ready(function()
 {
     $("#edit_detail_button").click(function(){
         $(this).prop("disabled",true);
+        $("#id_input").prop("readonly",true);
+        $("#tag_input").prop("readonly",true);
         $("#save_detail_input").css("visibility", "visible");
         $("#tag_select_span").css("visibility", "visible");
         $("#add_tag_button").css("visibility", "visible");
@@ -34,7 +36,13 @@ $(document).ready(function()
 
     $("#tag_select").on('click', function() {
         var current_tags = $("#tag_input").val();
-        $("#tag_input").val( current_tags + " " +$(this).val());
+        if (current_tags == "None"){
+            $("#tag_input").val($(this).val());
+        }
+        else{
+            $("#tag_input").val( current_tags + " " +$(this).val());
+        }
+
     });
 
     $("#location_select").on('click', function() {

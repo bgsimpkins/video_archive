@@ -57,7 +57,7 @@
             <table style="...">
                 <tr>
                     <td>Video Id:</td>
-                    <td><input class="detail_value_field_readonly" type="text" disabled name="id" value="{{ video.id }}">
+                    <td><input id="id_input" class="detail_value_field" type="text" {% if not edit %} disabled {% else %} readonly {% endif %} name="id" value="{{ video.id }}">
                 </tr>
                 <tr>
                     <td>Video Name:</td>
@@ -70,7 +70,7 @@
                 <tr>
                     <td>Tags:</td>
                     <td>
-                        <input id="tag_input" class="detail_value_field_readonly" type="text" {% if not edit %} disabled {% endif %} name="type" value="{{ video.type }}">
+                        <input id="tag_input" class="detail_value_field" type="text" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}">
                         <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
                             <select id="tag_select" name="tag_select">
                                 {% for tag in tag_list %}

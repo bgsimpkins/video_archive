@@ -71,13 +71,13 @@ th{
 }
 
 .left_split{
-    width: 50%;
+    width: 600px;
     height:500px;
     float: left;
 }
 
 .right_split{
-    margin-left: 50%;
+    margin-left: 700px;
     height:500px;
 }
 
