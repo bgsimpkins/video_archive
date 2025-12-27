@@ -84,7 +84,7 @@ def duplicate_check_bytes():
 def show_tags_used(config_vals):
 
     db_mapper = DBMapper(config_vals)
-    tags_dict = db_mapper.get_all_tags()
+    tags_dict = db_mapper.get_all_used_tags()
     print(tags_dict)
 
 

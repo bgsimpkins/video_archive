@@ -206,11 +206,18 @@ def video_detail():
     )
 
 
+@app.route('/video_tags', methods=['GET', 'POST'])
+def video_tags():
+    return render_template(
+        'video_tags.html'
+    )
+
+
 @app.route('/get_tags', methods=['GET', 'POST'])
 def get_tags():
     db_mapper = DBMapper(config_vals)
 
-    return db_mapper.get_all_tags()
+    return db_mapper.get_all_used_tags()
 
 
 @app.route('/get_locations', methods=['GET', 'POST'])

@@ -11,6 +11,7 @@ class DBMapper:
         self.engine = None
         self.User = None
         self.Video = None
+        self.Tag = None
 
         self.conn = None
         self.create_engine(config_vals)
@@ -31,6 +32,7 @@ class DBMapper:
         # matching that of the table name.
         self.Video = base.classes.videos_main
         self.User = base.classes.users
+        self.Tag = base.classes.types
 
     def get_all_videos(self) -> list:
         video_list = []
@@ -135,7 +137,7 @@ class DBMapper:
 
         #### Filters
         if todo:
-            stmt = stmt.where(sa.or_(self.Video.id == self.Video.videoName, self.Video.videoName is None))
+            stmt = stmt.where(sa.or_(self.Video.id == self.Video.videoName, self.Video.videoName == None))
 
         else:
             if videoname_contains is not None:
@@ -183,7 +185,10 @@ class DBMapper:
 
         return video_list, row_count
 
-    def get_all_tags(self):
+    def get_tags(self):
+        pass
+
+    def get_all_used_tags(self):
         tag_dict = {}
 
         conn = self.engine.connect()
