@@ -69,7 +69,17 @@
                 </tr>
                 <tr>
                     <td>Tags:</td>
-                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="type" value="{{ video.type }}">
+                    <td>
+                        <input id="tag_input" class="detail_value_field_readonly" type="text" {% if not edit %} disabled {% endif %} name="type" value="{{ video.type }}">
+                        <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
+                            <select id="tag_select" name="tag_select">
+                                {% for tag in tag_list %}
+                                <option value="{{ tag }}">{{ tag }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                        <button type="button" id="add_tag_button" {% if not edit %} style="visibility:hidden;" {% endif %} name="add_tag_button" value="Add New Tag">Add New Tag</button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Recorded Date:</td>
@@ -81,7 +91,15 @@
                 </tr>
                 <tr>
                     <td>Location:</td>
-                    <td><input class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="location" value="{{ video.location }}">
+                    <td><input id="location_input"  class="detail_value_field" type="text" {% if not edit %} disabled {% endif %} name="location" value="{{ video.location }}">
+                        <span id="location_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
+                            <select id="location_select" name="location_select">
+                                {% for loc in location_list %}
+                                <option value="{{ loc }}">{{ loc }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Primary Actor:</td>

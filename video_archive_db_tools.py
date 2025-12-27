@@ -186,7 +186,14 @@ class DBMapper:
         return video_list, row_count
 
     def get_tags(self):
-        pass
+        tag_list = []
+
+        conn = self.engine.connect()
+        stmt = sa.select(self.Tag)
+        for row in conn.execute(stmt):
+            tag_list.append(row.type)
+
+        return tag_list
 
     def get_all_used_tags(self):
         tag_dict = {}

@@ -198,11 +198,15 @@ def video_detail():
             db_mapper.update_video(id, request.form)
             vid = db_mapper.get_one_video(id)
 
+
+
     return render_template(
         'video_detail.html',
         video=vid,
         alert_text=alert_text,
-        edit=edit
+        edit=edit,
+        location_list=db_mapper.get_locations(),
+        tag_list=db_mapper.get_tags()
     )
 
 
