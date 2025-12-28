@@ -45,7 +45,7 @@ def video_archive():
             file.save(f"static/videos/{file_id}.{format}")
 
             # Create and save thumbnail
-            ffmpeg_call = f"ffmpeg -i static/videos/{file_id}.{format} -ss 00:00:02.000 -vframes 1 static/thumbnails/{file_id}.jpg"
+            ffmpeg_call = f"ffmpeg -nostdin -y -i static/videos/{file_id}.{format} -ss 00:00:02.000 -vframes 1 static/thumbnails/{file_id}.jpg"
             os.system(ffmpeg_call)
 
             return redirect(f"{url_for('video_detail')}?id={file_id}&edit=true")

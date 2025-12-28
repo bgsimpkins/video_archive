@@ -23,40 +23,49 @@ def batch_import(config_vals):
     for file in files:
         print(f"processing file: {file}")
         format = file.lower().split(".")[-1]
-        if format not in supported_containers:
-            continue
-
-        # TODO: If mod, run ffmpeg to convert. Set file to new filename
-        if format == "mod":
-            print("Conversion of MOD to mp4 not supported yet. Exiting!")
-            sys.exit(1)
+        # if format not in supported_containers:
+        #     continue
 
         # Create base Video record
         vid = db_mapper.Video()
 
-        timestamp = datetime.strptime(file.split(".")[0], "%Y%m%d_%H%M%S")
+        try:
+            timestamp = datetime.strptime(file.split(".")[0], "%Y%m%d_%H%M%S")
+        except ValueError:
+            print("Couldn't parse time. Default to None")
+            timestamp = None
 
         # Old id generating system was random, limited, and stupid. Just get max id and increment to get new one
         conn = db_mapper.engine.connect()
         max_id = conn.execute(sa.text("SELECT max(ID) FROM videos_main")).first()[0]
+        new_id = max_id + 1
 
-        vid.id = max_id + 1
+        # TODO: If mod, run ffmpeg to convert. Set file to new filename
+        if format != "mp4":
+            print(f"Attempting to covert file of type {format}!....")
+            ffmpeg_call = f"ffmpeg -nostdin -y -i '{os.path.join(import_dir, file)}' -c:v libx264 -c:a aac -crf 10 -preset:v medium static/videos/{new_id}.mp4"
+            os.system(ffmpeg_call)
+
+        else:
+            # Copy to videos dir
+            shutil.copyfile(os.path.join(import_dir, file), f"static/videos/{new_id}.mp4")
+
+        vid.id = new_id
         vid.videoName = vid.id
         vid.theDate = timestamp
         vid.addDate = datetime.now()
         vid.userName = 'bsimpkins'
         vid.originalFile = file
 
-        vid.link = f"videos/{vid.id}.{format}"
+        vid.link = f"videos/{new_id}.mp4"
 
         session.add(vid)
         session.commit()
 
-        # Copy to videos dir
-        shutil.copyfile(os.path.join(import_dir, file), f"static/videos/{vid.id}.{format}")
+
 
         # Create and save thumbnail
-        ffmpeg_call = f"ffmpeg -i static/{vid.link} -ss 00:00:02.000 -vframes 1 static/thumbnails/{vid.id}.jpg"
+        ffmpeg_call = f"ffmpeg -nostdin -y -i static/{vid.link} -ss 00:00:02.000 -vframes 1 static/thumbnails/{new_id}.jpg"
         os.system(ffmpeg_call)
 
         # Remove video from import dir

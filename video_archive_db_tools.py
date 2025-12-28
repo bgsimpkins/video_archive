@@ -189,7 +189,7 @@ class DBMapper:
         tag_list = []
 
         conn = self.engine.connect()
-        stmt = sa.select(self.Tag)
+        stmt = sa.select(self.Tag).order_by(self.Tag.type)
         for row in conn.execute(stmt):
             tag_list.append(row.type)
 
