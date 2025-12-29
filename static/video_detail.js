@@ -35,6 +35,7 @@ $(document).ready(function()
     });
 
     $("#tag_select").on('click', function() {
+        //////Old way of concatentating text field with tags (LAME)
         var current_tags = $("#tag_input").val();
         if (current_tags == "None"){
             $("#tag_input").val($(this).val());
@@ -42,6 +43,20 @@ $(document).ready(function()
         else{
             $("#tag_input").val( current_tags + " " +$(this).val());
         }
+        /////////////////
+        //TODO: This is close to working
+//        var tag = $(this).val();
+//
+//        //Remove selected tag from select
+//        $(this).find("[value='"+tag+"']").remove();
+//
+//        //Append tag box
+//        var tag_button =
+//            "<span id='"+tag+"_selected' class='selected_filter'>" +
+//            "<input class='selected_filter_value' type='text' readonly name='"+tag+"_button' value='"+tag+"'>&nbsp <img class='x_filter_button' name='"+tag+"' src='static/x.png'/>" +
+//            "</span>"
+//            ;
+//        $("#tag_select_span").append(tag_button);
 
     });
 

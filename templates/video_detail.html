@@ -70,6 +70,7 @@
                 <tr>
                     <td>Tags:</td>
                     <td>
+                        <!--TODO: Comment this input out and use individual tag input boxes (way cooler)-->
                         <input id="tag_input" class="detail_value_field" type="text" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}">
                         <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
                             <select id="tag_select" name="tag_select">
