@@ -47,7 +47,6 @@ $(document).ready(function()
 //            $("#tag_input").val( current_tags + " " +$(this).val());
 //        }
         /////////////////
-        //TODO: This is close to working
         var tag = $(this).val();
 
         //Remove selected tag from select
@@ -55,8 +54,10 @@ $(document).ready(function()
 
         //Append tag box
         var tag_button =
-            "<span id='"+tag+"_selected' class='selected_filter'>" +
-            "<input class='selected_filter_value' type='text' readonly name='"+tag+"_tag_input' value='"+tag+"'>&nbsp <img class='x_filter_button' name='"+tag+"' src='static/x.png'/>&nbsp " +
+            "<span id='"+tag+"_selected'>" +
+            "   <span class='selected_filter'>" +
+            "       <input class='selected_filter_value' type='text' readonly name='"+tag+"_tag_input' value='"+tag+"'>&nbsp <img class='x_filter_button' name='"+tag+"' src='static/x.png'/>&nbsp " +
+            "   </span> &nbsp" +
             "</span>"
             ;
         $("#tags_span").append(tag_button);
@@ -73,11 +74,30 @@ $(document).ready(function()
 
         //alert($(this).attr("name"));
 
+        var tag_name = $(this).attr("name");
+
         //Remote the span for this filter
-        $("#"+$(this).attr("name")+"_selected").remove();
+        $("#"+tag_name+"_selected").remove();
 
-        //TODO: Need to add removed value back to #tag_select (and probably need to resort)
+        //Add removed tag back to select
+        var tag_select = $('#tag_select');
+        tag_select.append("<option value='"+tag_name+"'>"+tag_name+"</option>");
 
+        //Get all tag options and re-sort
+        var tags = tag_select.children('option');
+        tags.sort(function(a, b) {
+            var compA = $(a).text().toUpperCase();
+            var compB = $(b).text().toUpperCase();
+            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+        });
+
+        //tag_select.clear();
+        $.each(tags, function(idx, itm) {
+            tag_select.append(itm);
+
+            //debug
+            //$("#video_detail").append("<br>"+$(itm).val());
+        });
     });
 
 });

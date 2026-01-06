@@ -88,11 +88,16 @@
                         <span id="tags_span">
                         {% if video.type %}
                             {% for tag in video.type.split() %}
-                            <span id='{{ tag }}_selected' class='selected_filter'>
-                                <input class='selected_filter_value' type='text' readonly name='{{ tag }}_tag_input' value='{{ tag }}'>&nbsp
-                                <img class='x_filter_button' {% if not edit %} style="visibility:hidden;" {% endif %} name='{{ tag }}' src="{{ url_for('static', filename='x.png') }}"/>
+
+                            <span id='{{ tag }}_selected'>
+
+                                <span class="selected_filter">
+                                    <input class='selected_filter_value' type='text' readonly name='{{ tag }}_tag_input' value='{{ tag }}'>&nbsp
+                                    <img class='x_filter_button' {% if not edit %} style="visibility:hidden;" {% endif %} name='{{ tag }}' src="{{ url_for('static', filename='x.png') }}"/>
+                                </span>
+                                &nbsp
                             </span>
-                            &nbsp
+
                             {% endfor %}
                         {% endif %}
                         </span>
