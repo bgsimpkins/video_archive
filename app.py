@@ -208,9 +208,10 @@ def video_detail():
 
     # Get tag and remove ones in vid
     tag_list = db_mapper.get_tags()
-    for tag in tag_list:
-        if tag in vid.type:
-            tag_list.remove(tag)
+    if vid.type is not None:
+        for tag in tag_list:
+            if tag in vid.type:
+                tag_list.remove(tag)
 
     return render_template(
         'video_detail.html',
