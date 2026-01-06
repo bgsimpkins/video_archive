@@ -76,6 +76,8 @@ $(document).ready(function()
         //Remote the span for this filter
         $("#"+$(this).attr("name")+"_selected").remove();
 
+        //TODO: Need to add removed value back to #tag_select (and probably need to resort)
+
     });
 
 });
