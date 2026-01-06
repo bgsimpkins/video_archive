@@ -69,8 +69,9 @@
                 </tr>
                 <tr>
                     <td>Tags:</td>
-                    <td>
-                        <!--TODO: Comment this input out and use individual tag input boxes (way cooler)-->
+                    <!--TODO: Comment this input out and use individual tag input boxes (way cooler)-->
+                    <!--td>
+
                         <input id="tag_input" class="detail_value_field" type="text" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}">
                         <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
                             <select id="tag_select" name="tag_select">
@@ -80,6 +81,30 @@
                             </select>
                         </span>
                         <button type="button" id="add_tag_button" {% if not edit %} style="visibility:hidden;" {% endif %} name="add_tag_button" value="Add New Tag">Add New Tag</button>
+                    </td-->
+
+                    <!--tag boxes-->
+                    <td>
+                        <span id="tags_span">
+                        {% if video.type %}
+                            {% for tag in video.type.split() %}
+                            <span id='{{ tag }}_selected' class='selected_filter'>
+                                <input class='selected_filter_value' type='text' readonly name='{{ tag }}_tag_input' value='{{ tag }}'>&nbsp
+                                <img class='x_filter_button' {% if not edit %} style="visibility:hidden;" {% endif %} name='{{ tag }}' src="{{ url_for('static', filename='x.png') }}"/>
+                            </span>
+                            &nbsp
+                            {% endfor %}
+                        {% endif %}
+                        </span>
+
+                        <!--input id="tag_input" class="detail_value_field" type="hidden" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}"-->
+                        <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
+                            <select id="tag_select" name="tag_select">
+                                {% for tag in tag_list %}
+                                <option value="{{ tag }}">{{ tag }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
                     </td>
                 </tr>
                 <tr>

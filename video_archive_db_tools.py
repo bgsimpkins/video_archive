@@ -63,7 +63,11 @@ class DBMapper:
         # Create base Video record
         vid = self.Video()
 
-        timestamp = datetime.strptime(filename.split(".")[0], "%Y%m%d_%H%M%S")
+        try:
+            timestamp = datetime.strptime(filename.split(".")[0], "%Y%m%d_%H%M%S")
+        except ValueError:
+            print("Couldn't parse time. Default to None")
+            timestamp = None
 
         # Old id generating system was random, limited, and stupid. Just get max id and increment to get new one
         conn = self.engine.connect()
@@ -93,7 +97,7 @@ class DBMapper:
         session.close()
 
     # TODO: fix to use list that in from POST
-    def update_video(self, id, vid_data):
+    def update_video(self, id, vid_data, tags):
         session = Session(self.engine)
 
         vid = session.query(self.Video).filter_by(id=id).first()
@@ -101,7 +105,7 @@ class DBMapper:
         # Nulls are here as 'None' string
         vid.videoName = vid_data["videoName"] if vid_data["videoName"] != "None" else None
         vid.userName = vid_data["userName"] if vid_data["userName"] != "None" else None
-        vid.type = self.sort_tags(vid_data["type"]) if vid_data["type"] != "None" else None
+        vid.type = self.sort_tags(tags) if tags != "None" else None
         vid.theDate = vid_data["theDate"] if vid_data["theDate"] != "None" else None
         vid.addDate = vid_data["addDate"] if vid_data["addDate"] != "None" else None
         vid.location = vid_data["location"] if vid_data["location"] != "None" else None

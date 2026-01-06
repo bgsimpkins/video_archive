@@ -14,9 +14,12 @@ $(document).ready(function()
         $("#tag_select_span").css("visibility", "visible");
         $("#add_tag_button").css("visibility", "visible");
         $("#location_select_span").css("visibility", "visible");
-        $(".detail_value_field").each(function(){
-            $(this).prop("disabled",false);
-        });
+        //Don't seem to need .each() fun
+//        $(".detail_value_field").each(function(){
+//            $(this).prop("disabled",false);
+//        });
+        $(".detail_value_field").prop("disabled",false);
+        $(".x_filter_button").css("visibility", "visible");
 
     });
 
@@ -36,27 +39,27 @@ $(document).ready(function()
 
     $("#tag_select").on('click', function() {
         //////Old way of concatentating text field with tags (LAME)
-        var current_tags = $("#tag_input").val();
-        if (current_tags == "None"){
-            $("#tag_input").val($(this).val());
-        }
-        else{
-            $("#tag_input").val( current_tags + " " +$(this).val());
-        }
+//        var current_tags = $("#tag_input").val();
+//        if (current_tags == "None"){
+//            $("#tag_input").val($(this).val());
+//        }
+//        else{
+//            $("#tag_input").val( current_tags + " " +$(this).val());
+//        }
         /////////////////
         //TODO: This is close to working
-//        var tag = $(this).val();
-//
-//        //Remove selected tag from select
-//        $(this).find("[value='"+tag+"']").remove();
-//
-//        //Append tag box
-//        var tag_button =
-//            "<span id='"+tag+"_selected' class='selected_filter'>" +
-//            "<input class='selected_filter_value' type='text' readonly name='"+tag+"_button' value='"+tag+"'>&nbsp <img class='x_filter_button' name='"+tag+"' src='static/x.png'/>" +
-//            "</span>"
-//            ;
-//        $("#tag_select_span").append(tag_button);
+        var tag = $(this).val();
+
+        //Remove selected tag from select
+        $(this).find("[value='"+tag+"']").remove();
+
+        //Append tag box
+        var tag_button =
+            "<span id='"+tag+"_selected' class='selected_filter'>" +
+            "<input class='selected_filter_value' type='text' readonly name='"+tag+"_tag_input' value='"+tag+"'>&nbsp <img class='x_filter_button' name='"+tag+"' src='static/x.png'/>&nbsp " +
+            "</span>"
+            ;
+        $("#tags_span").append(tag_button);
 
     });
 
@@ -64,5 +67,15 @@ $(document).ready(function()
         $("#location_input").val($(this).val());
     });
 
+
+//    $(".x_filter_button").click( function(){
+    $(document).on('click', '.x_filter_button', function() {
+
+        //alert($(this).attr("name"));
+
+        //Remote the span for this filter
+        $("#"+$(this).attr("name")+"_selected").remove();
+
+    });
 
 });

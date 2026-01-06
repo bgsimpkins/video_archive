@@ -195,10 +195,22 @@ def video_detail():
 
         else:
             print(f"updating video {id}")
-            db_mapper.update_video(id, request.form)
+            tags = ""
+            # Get tags from form values and concatenate as expected in DB
+            for name, val in request.form.items():
+                if name[-9:] == "tag_input":
+                    tags = f"{tags} {val}"
+
+            tags = "None" if tags == "" else tags.strip()
+
+            db_mapper.update_video(id, request.form, tags)
             vid = db_mapper.get_one_video(id)
 
-
+    # Get tag and remove ones in vid
+    tag_list = db_mapper.get_tags()
+    for tag in tag_list:
+        if tag in vid.type:
+            tag_list.remove(tag)
 
     return render_template(
         'video_detail.html',
@@ -206,7 +218,7 @@ def video_detail():
         alert_text=alert_text,
         edit=edit,
         location_list=db_mapper.get_locations(),
-        tag_list=db_mapper.get_tags()
+        tag_list=tag_list
     )
 
 
