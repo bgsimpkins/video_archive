@@ -37,7 +37,7 @@ $(document).ready(function()
         $(location).attr('href', "video_tags");
     });
 
-    $("#tag_select").on('click', function() {
+    $("#tag_select").on('change', function() {
         //////Old way of concatentating text field with tags (LAME)
 //        var current_tags = $("#tag_input").val();
 //        if (current_tags == "None"){
@@ -64,7 +64,7 @@ $(document).ready(function()
 
     });
 
-    $("#location_select").on('click', function() {
+    $("#location_select").on('change', function() {
         $("#location_input").val($(this).val());
     });
 

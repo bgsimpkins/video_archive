@@ -29,7 +29,20 @@ $(document).ready(function()
             //$("#filter_value_panel").append("Enter location keywords:&nbsp <input type='text' id='location_input' name='location_input'>");
         }
         else if ($(this).val() == "tags"){
-            $("#filter_value_panel").append("Enter tags keywords:&nbsp <input type='text' id='tags_input' name='tags_input'>");
+            $("#filter_value_panel").append(
+                "Enter tags keywords:&nbsp" +
+                "<input type='text' id='tags_input' readonly name='tags_input'>" +
+                "<select name='tags_select' id='tags_select' class='tags_select'>");
+            $.get("get_tags",function(data){
+
+                $.each(data, function(key, val){
+                    $("#tags_select").append("<option class='tags_option' value='"+val+"'>"+val+"</option>");
+                });
+
+            });
+            $("#filter_value_panel").append("</select>");
+
+
         }
         else if ($(this).val() == "theDate"){
             $("#filter_value_panel").append("Enter date range:&nbsp <input type='text' id='date_start_input' name='date_start_input' value='1970-01-01' style='width:80px'> &nbsp to &nbsp <input type='text' id='date_end_input' name='date_end_input' value='9999-12-31' style='width:80px'>");
@@ -75,4 +88,17 @@ $(document).ready(function()
 
     });
 
+    $("#filter_value_panel").on('change', '#tags_select', function(event) {
+
+        var current_tags = $("#tags_input").val();
+        if (current_tags == "None"){
+            $("#tags_input").val($(this).val());
+        }
+        $("#tags_input").val( current_tags + " " +$(this).val());
+
+        $(this).find("[value='"+$(this).val()+"']").remove();
+    });
+
 });
+
+

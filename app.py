@@ -234,7 +234,7 @@ def video_tags():
 def get_tags():
     db_mapper = DBMapper(config_vals)
 
-    return db_mapper.get_all_used_tags()
+    return db_mapper.get_tags()
 
 
 @app.route('/get_locations', methods=['GET', 'POST'])
