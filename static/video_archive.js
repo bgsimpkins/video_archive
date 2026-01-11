@@ -12,6 +12,11 @@ $(document).ready(function()
 
         //Clear out previous value stuff
         $("#filter_value_panel").empty();
+
+//        //Clear todo state
+//        $("#todo_submit").prop("disabled",false);
+//        $("#todo_hidden_input").remove();
+
         if ($(this).val() == "videoName")
         {
             $("#filter_value_panel").append("Enter name keywords:&nbsp <input type='text' id='videoName_input' name='videoName_input'>");
