@@ -84,8 +84,11 @@ def video_archive():
         if "todo_submit" in request.form:
             todo_filter = True
             pagination_list[1] = 1
+        elif "add_filter" in request.form:
+            todo_filter = False
         elif "todo" in request.form:
             todo_filter = True
+
 
         # TODO: This is pretty hard-coded. Could be handled more eloquently
         for x in request.form.items():

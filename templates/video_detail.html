@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <td>Tags:</td>
-                    <!--TODO: Comment this input out and use individual tag input boxes (way cooler)-->
+                    <!--------Old way with text box-->
                     <!--td>
 
                         <input id="tag_input" class="detail_value_field" type="text" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}">
@@ -83,7 +83,7 @@
                         <button type="button" id="add_tag_button" {% if not edit %} style="visibility:hidden;" {% endif %} name="add_tag_button" value="Add New Tag">Add New Tag</button>
                     </td-->
 
-                    <!--tag boxes-->
+                    <!--------New way with tag boxes-->
                     <td>
                         <span id="tags_span">
                         {% if video.type %}
