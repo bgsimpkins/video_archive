@@ -105,6 +105,8 @@
                         <!--input id="tag_input" class="detail_value_field" type="hidden" {% if not edit %} disabled {% else %} readonly {% endif %} name="type" value="{{ video.type }}"-->
                         <span id="tag_select_span" {% if not edit %} style="visibility:hidden;" {% endif %} >
                             <select id="tag_select" name="tag_select">
+                                <!--Since using 'change' event, add label as first element (because first value will never fire event using 'change')-->
+                                <option value="Select Tags">Select Tags:</option>
                                 {% for tag in tag_list %}
                                 <option value="{{ tag }}">{{ tag }}</option>
                                 {% endfor %}

@@ -34,7 +34,8 @@ $(document).ready(function()
                 "<input type='text' id='tags_input' readonly name='tags_input'>" +
                 "<select name='tags_select' id='tags_select' class='tags_select'>");
             $.get("get_tags",function(data){
-
+                //Since using 'change' event, add label as first element (because first value will never fire event using 'change')
+                $("#tags_select").append("<option class='tags_option' value='Select Tag:'>Select Tag:</option>");
                 $.each(data, function(key, val){
                     $("#tags_select").append("<option class='tags_option' value='"+val+"'>"+val+"</option>");
                 });
