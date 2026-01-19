@@ -57,7 +57,8 @@ def video_archive():
     description_contains = None
     location_contains = None
     tags_contains = None
-    date_between = ['1970-01-01', '9999-12-31']
+    # date_between = ['1970-01-01', '9999-12-31']
+    date_between = None
 
     # Filter options combo box. Remove items that are in POST
     filter_options = {
