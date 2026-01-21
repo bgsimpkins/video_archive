@@ -1,6 +1,6 @@
 import os
 import sys
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from video_archive_db_tools import DBMapper
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
@@ -238,14 +238,14 @@ def video_tags():
 def get_tags():
     db_mapper = DBMapper(config_vals)
 
-    return db_mapper.get_tags()
+    return jsonify(db_mapper.get_tags())
 
 
 @app.route('/get_locations', methods=['GET', 'POST'])
 def get_locations():
     db_mapper = DBMapper(config_vals)
 
-    return db_mapper.get_locations()
+    return jsonify(db_mapper.get_locations())
 
 
 if __name__ == '__main__':
